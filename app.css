@@ -33,3 +33,13 @@ h3 {
   .content-3 .sub-title {
     font-size: 12px;
     text-align: center; }
+  .content-3 .bt-line {
+    border-bottom: #666 dashed 2px;
+    padding: 10px; }
+
+@media only screen and (max-width: 480px) {
+  body {
+    color: red; } }
+
+.content-4 {
+  font-size: 0.53333rem; }

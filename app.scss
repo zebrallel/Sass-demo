@@ -13,7 +13,11 @@ $baseFontSize: 12px;
 // 多值变量
 // 多值变量分为list类型和map类型，简单来说list有点像js中的数组，map类型有点像js中的对象
 $linkColor: #333 #f30;
-$headings: (h1: 2em, h2: 1.5em, h3: 1.2em);
+$headings: (
+    h1: 2em,
+    h2: 1.5em,
+    h3: 1.2em
+);
 @each $header, $size in $headings {
     #{$header} {
         font-size: $size;
@@ -24,11 +28,11 @@ $headings: (h1: 2em, h2: 1.5em, h3: 1.2em);
 $commonHeight: 20px;
 
 .content {
-    line-height: $baseLineHeight;  // 这里是2，而不是1.5
+    line-height: $baseLineHeight; // 这里是2，而不是1.5
     font-size: #{$baseFontSize}/#{$baseLineHeight}; // 特殊变量的使用方式 #{${variable}}
     color: nth($list: $linkColor, $n: 1); // 通过这种方式来配置不同的颜色
 
-    &:hover{
+    &:hover {
         color: nth($list: $linkColor, $n: 2);
     }
 
@@ -37,13 +41,13 @@ $commonHeight: 20px;
         height: $commonHeight; // 这里是局部变量，所以为10px
     }
 
-    .box-2{
+    .box-2 {
         height: $commonHeight; // 这里是20px
     }
 }
 
 // 属性嵌套
-.content-2{
+.content-2 {
     border: {
         style: solid;
         left: {
@@ -54,26 +58,61 @@ $commonHeight: 20px;
 }
 
 // mixin
-@mixin center-block { // 没有参数
+@mixin center-block {
+    // 没有参数
     margin : {
         left: 10px;
         top: 10px;
     }
 }
 
-@mixin title($fontSize: 12px) { // 有参数, 12px为默认值
+// 单个参数的mixin
+@mixin title($fontSize: 12px) {
+    // 有参数, 12px为默认值
     font-size: $fontSize;
     text-align: center;
 }
 
-.content-3{
+// 多个参数的mixin
+@mixin bottom-line($border: #333 solid 1px, $padding: 10px) {
+    border-bottom: $border;
+    padding: $padding;
+}
+
+.content-3 {
     @include center-block();
 
-    .title{
+    .title {
         @include title(20px);
     }
 
-    .sub-title{
+    .sub-title {
         @include title();
     }
+
+    .bt-line {
+        @include bottom-line(#666 dashed 2px);
+    }
+}
+
+// @content
+@mixin max-screen($res) {
+    @media only screen and (max-width: $res) {
+        @content;
+    }
+}
+
+@include max-screen(480px) {
+    body {
+        color: red;
+    }
+}
+
+// @function
+@function px2rem($px){
+    @return $px / 60px * 1rem;
+}
+
+.content-4{
+    font-size: px2rem(32px);
 }
